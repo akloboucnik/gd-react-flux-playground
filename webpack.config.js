@@ -52,7 +52,8 @@ module.exports = function getWebpackConfig() {
             modulesDirectories: ['node_modules', 'bower_components'],
 
             alias: {
-                react: path.join(__dirname, 'node_modules/react/')
+                react: path.join(__dirname, 'node_modules/react/'),
+                'react-bootstrap': path.join(__dirname, 'node_modules/react-bootstrap')
             }
         },
 

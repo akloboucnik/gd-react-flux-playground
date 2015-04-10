@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rm -rf build/*",
     "start": "npm run dev",
-    "dev": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.dev.config.js --hot --port 3000 --progress --colors & open http://localhost:3000/",
+    "dev": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.dev.config.js --hot --port 3000 --progress --colors && open http://localhost:3000/",
     "build": "npm run clean && ./node_modules/webpack/bin/webpack.js --config webpack.build.config.js --progress --colors",
     "test": "./node_modules/karma/bin/karma start",
     "ci": "./node_modules/karma/bin/karma start --single-run --no-auto-watch"
@@ -51,6 +51,8 @@
     "webpack-dev-server": "1.7.0"
   },
   "dependencies": {
-    "react": "0.12.2"
+    "react": "^0.13.0",
+    "react-bootstrap": "^0.20.0",
+    "react-router": "^0.13.0"
   }
 }
