@@ -5,8 +5,9 @@
   "main": "index.html",
   "scripts": {
     "clean": "rm -rf build/*",
-    "start": "npm run dev",
-    "dev": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.dev.config.js --hot --port 3000 --progress --colors && open http://localhost:3000/",
+    "start": "npm run start-backend & npm run dev",
+    "start-backend": "./node_modules/.bin/grizzly -d .",
+    "dev": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.dev.config.js --inline --https --hot --port 3000 --progress --colors && open http://localhost:3000/",
     "build": "npm run clean && ./node_modules/webpack/bin/webpack.js --config webpack.build.config.js --progress --colors",
     "test": "./node_modules/karma/bin/karma start",
     "ci": "./node_modules/karma/bin/karma start --single-run --no-auto-watch"
@@ -26,6 +27,7 @@
     "chai": "^2.1.1",
     "css-loader": "0.9.1",
     "file-loader": "0.8.1",
+    "grunt-grizzly": "git://github.com/gooddata/grunt-grizzly.git",
     "html-webpack-plugin": "1.1.0",
     "json5": "0.4.0",
     "karma": "^0.12.31",
