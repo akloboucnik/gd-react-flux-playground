@@ -53,13 +53,15 @@ module.exports = function getWebpackConfig() {
 
             alias: {
                 react: path.join(__dirname, 'node_modules/react/'),
-                'react-bootstrap': path.join(__dirname, 'node_modules/react-bootstrap')
+                'react-bootstrap': path.join(__dirname, 'node_modules/react-bootstrap'),
+                'sdk': path.join(__dirname, 'bower_components/gooddata/gooddata')
             }
         },
 
         plugins: [
             new webpack.ProvidePlugin({
-                React: 'react'
+                React: 'react',
+                $: 'jquery/jquery'
             })
         ]
     };

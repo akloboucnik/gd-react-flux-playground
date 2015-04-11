@@ -12,5 +12,8 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "gooddata": "git://github.com/gooddata/bower-gooddata-js.git#~0.1.12"
+  }
 }
