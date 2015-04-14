@@ -8,18 +8,44 @@ import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import Users from './components/users';
+import Login from './components/login_info';
 import sdk from 'sdk';
+
+const USER = '<user name>';
+const PASS = '<password>';
 
 let {DefaultRoute, Link, Route, RouteHandler} = Router;
 
 let App = React.createClass({
-    render: function() {
+    getInitialState() {
+        return {
+            loadingBootstrap: true,
+            bootstrap: {}
+        };
+    },
+    componentDidMount() {
+        sdk.user
+        .login(USER, PASS)
+        .then(() => {
+            return sdk.user.getAccountInfo();
+        })
+        .then((bootstrap) => {
+            this.setState({
+                loadingBootstrap: false,
+                bootstrap: bootstrap
+            });
+        });
+
+    },
+
+    render() {
         return (
             <div className="container-fluid">
                 <NavBar inverse fixedTop brand='User mgmt'>
                     <Nav>
                         <li><Link to="users">Users</Link></li>
                     </Nav>
+                    <Login isLoading={this.state.loadingBootstrap} bootstrap={this.state.bootstrap} />
                 </NavBar>
                 <Grid>
                     <Row style={ {marginTop: '80px'} } className='show-grid'>
