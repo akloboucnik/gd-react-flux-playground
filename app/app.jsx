@@ -9,10 +9,11 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import Users from './components/users';
 import Login from './components/login_info';
+import Tab from './components/tab';
 import sdk from 'sdk';
 
-const USER = '<user name>';
-const PASS = '<password>';
+// TODO add proper login
+const {USER, PASS} = require('../.credentials');
 
 let {DefaultRoute, Link, Route, RouteHandler} = Router;
 
@@ -37,20 +38,30 @@ let App = React.createClass({
         });
 
     },
+    handleUserStateFilterChange() {
+        debugger;
+    },
 
     render() {
         return (
             <div className="container-fluid">
                 <NavBar inverse fixedTop brand='User mgmt'>
                     <Nav>
-                        <li><Link to="users">Users</Link></li>
+                        <li>
+                            <a href="https://localhost:8443/dashboard.html">Dashboard</a>
+                        </li>
+                        <Tab to="home">Users</Tab>
                     </Nav>
                     <Login isLoading={this.state.loadingBootstrap} bootstrap={this.state.bootstrap} />
                 </NavBar>
                 <Grid>
                     <Row style={ {marginTop: '80px'} } className='show-grid'>
                         <Col md={4}>
-                            <span>here be menu</span>
+                            <Nav bsStyle='pills' stacked onSelect={this.handleUserStateFilterChange}>
+                                <Tab to="home" query="">Active</Tab>
+                                <Tab to="home" query={{state: 'INVITED'}}>Invited</Tab>
+                                <Tab to="home" query={{state: 'DEACTIVATED'}}>Deactivated</Tab>
+                            </Nav>
                         </Col>
                         <Col md={8}>
                             <RouteHandler />
@@ -64,7 +75,7 @@ let App = React.createClass({
 
 var routes = (
   <Route handler={App}>
-    <Route name="users" handler={Users}/>
+      <DefaultRoute name="home" handler={Users}/>
   </Route>
 );
 
