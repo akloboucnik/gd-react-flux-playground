@@ -1,5 +1,4 @@
 import React, { PropTypes} from 'react';
-// import Alert from 'react-bootstrap/lib/Alert';
 import Router from 'react-router';
 import NavBar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
@@ -10,12 +9,19 @@ import Col from 'react-bootstrap/lib/Col';
 import Users from './components/users';
 import Login from './components/login_info';
 import Tab from './components/tab';
-import sdk from 'sdk';
+import { login } from './utils/APIUtils';
+import BootstrapStore from './stores/BootstrapStore';
 
 // TODO add proper login
 const {USER, PASS} = require('../.credentials');
+login(USER, PASS);
 
 let {DefaultRoute, Link, Route, RouteHandler} = Router;
+function getStateFromStores() {
+    return {
+        bootstrap: BootstrapStore.getBootstrap()
+    };
+}
 
 let App = React.createClass({
     propTypes: {
@@ -23,24 +29,13 @@ let App = React.createClass({
         query: PropTypes.object.isRequired
     },
     getInitialState() {
-        return {
-            loadingBootstrap: true,
-            bootstrap: {}
-        };
+        return getStateFromStores();
     },
     componentDidMount() {
-        sdk.user
-        .login(USER, PASS)
-        .then(() => {
-            return sdk.user.getAccountInfo();
-        })
-        .then((bootstrap) => {
-            this.setState({
-                loadingBootstrap: false,
-                bootstrap: bootstrap
-            });
-        });
-
+        BootstrapStore.addChangeListener(this._onChange);
+    },
+    _onChange() {
+        this.setState(getStateFromStores());
     },
 
     render() {
