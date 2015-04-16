@@ -24,5 +24,11 @@
         "expect": true,
         "DEBUG": true,
         "React": true
+    },
+    "plugins": [
+       "react"
+    ],
+    "ecmaFeatures": {
+        "jsx": true
     }
 }

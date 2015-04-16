@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes} from 'react';
 // import Alert from 'react-bootstrap/lib/Alert';
 import Router from 'react-router';
 import NavBar from 'react-bootstrap/lib/Navbar';
@@ -18,6 +18,10 @@ const {USER, PASS} = require('../.credentials');
 let {DefaultRoute, Link, Route, RouteHandler} = Router;
 
 let App = React.createClass({
+    propTypes: {
+        params: PropTypes.object.isRequired,
+        query: PropTypes.object.isRequired
+    },
     getInitialState() {
         return {
             loadingBootstrap: true,
@@ -38,9 +42,6 @@ let App = React.createClass({
         });
 
     },
-    handleUserStateFilterChange() {
-        debugger;
-    },
 
     render() {
         return (
@@ -57,7 +58,7 @@ let App = React.createClass({
                 <Grid>
                     <Row style={ {marginTop: '80px'} } className='show-grid'>
                         <Col md={4}>
-                            <Nav bsStyle='pills' stacked onSelect={this.handleUserStateFilterChange}>
+                            <Nav bsStyle='pills' stacked>
                                 <Tab to="home" query="">Active</Tab>
                                 <Tab to="home" query={{state: 'INVITED'}}>Invited</Tab>
                                 <Tab to="home" query={{state: 'DEACTIVATED'}}>Deactivated</Tab>
@@ -74,14 +75,16 @@ let App = React.createClass({
 });
 
 var routes = (
-  <Route handler={App}>
-      <DefaultRoute name="home" handler={Users}/>
-  </Route>
+    <Route handler={App}>
+        <DefaultRoute name="home" handler={Users}/>
+    </Route>
 );
 
 
-Router.run(routes, function (Handler) {
-  React.render(<Handler/>, document.getElementById('app'));
+Router.run(routes, function (Handler, state) {
+    // TODO Fire action to RouterStore
+    var userState = state.query.state || 'ACTIVE';
+    React.render(<Handler/>, document.getElementById('app'));
 });
 
 if (DEBUG) {
