@@ -6,9 +6,9 @@ export function login(username, password) {
         .user
         .login(username, password)
         .then(() => {
-            return sdk.user.getAccountInfo();
+            return sdk.xhr.get('/gdc/app/account/bootstrap');
         })
-        .then((bootstrap) => {
-            loginAndBootstrap(bootstrap);
+        .then((result) => {
+            loginAndBootstrap(result.bootstrapResource);
         });
 }

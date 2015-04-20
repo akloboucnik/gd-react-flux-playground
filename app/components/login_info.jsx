@@ -10,10 +10,11 @@ export default React.createClass({
     },
 
     render() {
-        let userName;
+        let account = this.props.bootstrap.accountSetting,
+            userName;
         // TODO add proper loading state
-        if(this.props.bootstrap.login) {
-            userName = `${this.props.bootstrap.firstName} ${this.props.bootstrap.lastName}`;
+        if(account && account.login) {
+            userName = `${account.firstName} ${account.lastName}`;
         }
         return (
             <Nav right>

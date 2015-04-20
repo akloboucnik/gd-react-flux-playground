@@ -36,5 +36,7 @@ class BootstrapStore extends EventEmitter {
     }
 }
 
-export default new BootstrapStore();
+let instance = new BootstrapStore();
+
+export default instance;
 
