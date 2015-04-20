@@ -34,6 +34,14 @@ class BootstrapStore extends EventEmitter {
     getBootstrap() {
         return _bootstrapData;
     }
+
+    getProjectId() {
+        if (_bootstrapData.current) {
+            return _bootstrapData.current.project.links.self.split('/')[3];
+        }
+
+        return null;
+    }
 }
 
 let instance = new BootstrapStore();

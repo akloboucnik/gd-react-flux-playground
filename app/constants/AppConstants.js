@@ -2,7 +2,9 @@ import keyMirror from 'react/lib/keyMirror';
 
 export default {
     ActionTypes: keyMirror({
-        LOGIN_BOOTSTRAP: null
+        LOGIN_BOOTSTRAP: null,
+        GET_USERS: null,
+        CLICK_USER_FILTER: null
     }),
 
     PayloadSources: keyMirror({

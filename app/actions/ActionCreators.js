@@ -9,3 +9,10 @@ export function loginAndBootstrap(bootstrapData) {
     });
 }
 
+export function getUsers(users) {
+    AppDispatcher.handleServerAction({
+        type: ActionTypes.GET_USERS,
+        users: users
+    });
+}
+

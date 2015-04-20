@@ -11,10 +11,23 @@ import Login from './components/login_info';
 import Tab from './components/tab';
 import { login } from './utils/APIUtils';
 import BootstrapStore from './stores/BootstrapStore';
+import AppDispatcher from './dispatcher/AppDispatcher';
+import { PayloadSources, ActionTypes } from './constants/AppConstants';
 
 // TODO add proper login
 const {USER, PASS} = require('../.credentials');
 login(USER, PASS);
+
+// TODO how to trigger initial page load
+// FIXME how to work with async dependencies between stores?
+//  - now I hope that bootstrap finishes in 4s because I need
+//  project Id from BootStrap store
+setTimeout(() => {
+    AppDispatcher.dispatch({
+        source: PayloadSources.VIEW_ACTION,
+        action: { type: ActionTypes.CLICK_USER_FILTER }
+    });
+}, 4000);
 
 let {DefaultRoute, Link, Route, RouteHandler} = Router;
 function getStateFromStores() {
@@ -24,6 +37,8 @@ function getStateFromStores() {
 }
 
 let App = React.createClass({
+    // FIXME does it need to be here to be able to pass queryParams down
+    // the component tree?
     propTypes: {
         params: PropTypes.object.isRequired,
         query: PropTypes.object.isRequired
@@ -78,6 +93,9 @@ var routes = (
 
 Router.run(routes, function (Handler, state) {
     // TODO Fire action to RouterStore
+    // FIXME should RouterStore exists and "redispatch" changes to e.g. queryParams to
+    // appropriate stores? (e.g. change of state to UserStore to get filtered List?
+    // or should this be fired by click handlers on filters?
     var userState = state.query.state || 'ACTIVE';
     React.render(<Handler/>, document.getElementById('app'));
 });

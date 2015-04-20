@@ -1,5 +1,5 @@
 import sdk from 'sdk';
-import {loginAndBootstrap} from '../actions/ActionCreators';
+import {loginAndBootstrap, getUsers} from '../actions/ActionCreators';
 
 export function login(username, password) {
     sdk
@@ -12,3 +12,14 @@ export function login(username, password) {
             loginAndBootstrap(result.bootstrapResource);
         });
 }
+
+export function getUserList(projectId) {
+    let uri = `/gdc/projects/${projectId}/userlist?offset=0&limit=50&indicatePermission=canExecute&userState=ACTIVE`;
+    sdk
+       .xhr
+       .get(uri)
+       .then((result) => {
+           getUsers(result.userList.items);
+       });
+}
+
