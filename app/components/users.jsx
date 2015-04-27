@@ -10,17 +10,11 @@ function getStateFromStores() {
     };
 }
 
-export default React.createClass({
-    getInitialState() {
-        return getStateFromStores();
-    },
-    componentDidMount() {
-        UserStore.addChangeListener(this._onChange);
-    },
-    _onChange() {
-        this.setState(getStateFromStores());
-    },
-
+export default class Users extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = getStateFromStores();
+    }
     render() {
         let rows = this.state.users.map((row) => {
             return (
@@ -48,4 +42,5 @@ export default React.createClass({
             );
         }
     }
-})
+}
+

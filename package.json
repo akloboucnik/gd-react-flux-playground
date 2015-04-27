@@ -1,5 +1,5 @@
 {
-  "name": "dev-stack",
+  "name": "react-user-mgmt",
   "version": "0.0.1",
   "description": "",
   "main": "index.html",
@@ -12,16 +12,11 @@
     "test": "./node_modules/karma/bin/karma start",
     "ci": "./node_modules/karma/bin/karma start --single-run --no-auto-watch"
   },
-  "author": {
-    "name": "Zdenek Kostal",
-    "email": "kostal.zdenek@gmail.com",
-    "url": "https://github.com/zdenekkostal/"
-  },
   "devDependencies": {
     "autoprefixer-loader": "1.1.0",
-    "babel-core": "^4.7.0",
-    "babel-loader": "^4.2.0",
-    "babel-runtime": "^4.6.0",
+    "babel-core": "^5.1.13",
+    "babel-loader": "^5.0.0",
+    "babel-runtime": "^5.1.13",
     "browserslist": "0.2.0",
     "caniuse-db": "1.0.30000060",
     "chai": "^2.1.1",
@@ -55,7 +50,7 @@
     "webpack-dev-server": "1.7.0"
   },
   "dependencies": {
-    "flux": "^2.0.1",
+    "flummox": "^4.0.0-alpha",
     "react": "^0.13.0",
     "react-bootstrap": "^0.20.0",
     "react-router": "^0.13.0",

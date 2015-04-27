@@ -3,11 +3,11 @@ import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
 import Icon from 'react-bootstrap/lib/Glyphicon';
 
-export default React.createClass({
-    displayName: 'LoginInfo',
+export default class LoginInfo extends React.Component {
+    displayName: 'LoginInfo'
     propTypes: {
         bootstrap: React.PropTypes.object.isRequired
-    },
+    }
 
     render() {
         let account = this.props.bootstrap.accountSetting,
@@ -24,5 +24,5 @@ export default React.createClass({
             </Nav>
         );
     }
-});
+};
 
