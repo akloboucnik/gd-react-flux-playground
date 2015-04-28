@@ -12,8 +12,8 @@ export class LoginStore extends Store {
         };
     }
 
-    handleBoostrapStart() {
-        console.log("bootstrap start ==== ", arguments);
+    handleBootstrapStart() {
+        console.log('bootstrap start ==== ', arguments);
         // this actually emits the change
         this.replaceState({
             loading: true,
@@ -22,7 +22,7 @@ export class LoginStore extends Store {
     }
 
     handleBootstrap(data) {
-        console.log("bootstrap end ==== ", data);
+        console.log('bootstrap end ==== ', data);
         // this actually emits the change
         this.replaceState({
             loading: false,
@@ -31,12 +31,19 @@ export class LoginStore extends Store {
     }
 
     handleBootrapError(err) {
-        console.log("bootstrap error ==== ", err);
+        console.log('bootstrap error ==== ', err);
         this.replaceState({ loading: false, error: true });
     }
 
     getBootstrap() {
         return this.state.bootstrap;
+    }
+
+    getProjectId() {
+        if(!this.state.bootstrap.current) {
+            return null;
+        }
+        return this.state.bootstrap.current.project.links.self.split('/')[3];
     }
 }
 

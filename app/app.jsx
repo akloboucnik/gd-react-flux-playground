@@ -50,7 +50,9 @@ let App = React.createClass({
                             </Nav>
                         </Col>
                         <Col md={8}>
-                            <RouteHandler />
+                            <FluxComponent flux={flux}>
+                                <RouteHandler />
+                            </FluxComponent>
                         </Col>
                     </Row>
                 </Grid>

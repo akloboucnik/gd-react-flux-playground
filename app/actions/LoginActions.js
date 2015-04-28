@@ -10,9 +10,7 @@ export class LoginActions extends Actions {
     login(username, password) {
         let $promise = apiLogin(username, password);
 
-        return Promise.resolve($promise.then(() => {
-            return apiBootstrap();
-        }));
+        return Promise.resolve($promise.then(apiBootstrap));
     }
 }
 

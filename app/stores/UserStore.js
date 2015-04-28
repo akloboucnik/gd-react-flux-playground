@@ -1,58 +1,53 @@
-import BootstrapStore from './BootstrapStore';
-import AppDispatcher from '../dispatcher/AppDispatcher';
-import { ActionTypes } from '../constants/AppConstants';
-import { EventEmitter } from 'events';
-import { getUserList } from '../utils/APIUtils';
+import { Store } from 'flummox';
+import LoginStore from './LoginStore';
 
-const CHANGE_EVENT = 'change';
-let _users = [];
-let _isLoading = true;
-
-class UserStore extends EventEmitter {
-    constructor() {
+export default class UserStore extends Store {
+    constructor(flux) {
         super();
-        this.dispatchToken = AppDispatcher.register((payload) => {
-            let {action} = payload;
-            switch(action.type) {
-                case ActionTypes.CLICK_USER_FILTER:
-                    _isLoading = true;
-                    // dispatch GET_USERS
-                    // => call API method getUserList and provide it with projectId from BootstrapStore
-                    getUserList(BootstrapStore.getProjectId());
-                    this.emitChange();
-                    break;
 
-                case ActionTypes.GET_USERS:
-                    _isLoading = false;
-                    _users = action.users;
-                    this.emitChange();
-                    break;
+        const userActionIds = flux.getActionIds('user');
+        this.registerAsync(userActionIds.getUsers, this.handleUserListStart, this.handleUserList, this.handleUserListError);
 
-                default:
-            }
-
+        this.replaceState({
+            loading: true,
+            error: false,
+            users: []
         });
     }
 
-    emitChange() {
-        this.emit(CHANGE_EVENT);
+    handleUserListStart() {
+        this.replaceState({
+            loading: true,
+            error: false,
+            users: []
+        });
+        console.log(' users list start === ');
     }
 
-    addChangeListener(cb) {
-        this.on(CHANGE_EVENT, cb);
+    handleUserList(data) {
+        console.log(' users list  === ', data);
+        this.replaceState({
+            loading: false,
+            error: false,
+            users: data.userList.items
+        });
     }
 
-    isLoading() {
-        return _isLoading;
+    handleUserListError(err) {
+        this.replaceState({
+            loading: false,
+            error: true,
+            users: [],
+            errorData: err
+        });
     }
 
     getUsers() {
-        return _users;
+        return this.state.users;
     }
 
+    isLoading() {
+        return this.state.loading;
+    }
 }
-
-let instance = new UserStore();
-
-export default instance;
 

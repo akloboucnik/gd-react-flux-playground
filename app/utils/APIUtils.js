@@ -11,8 +11,6 @@ export function bootstrap() {
 
 export function getUserList(projectId) {
     let uri = `/gdc/projects/${projectId}/userlist?offset=0&limit=50&indicatePermission=canExecute&userState=ACTIVE`;
-    return sdk
-       .xhr
-       .get(uri);
+    return sdk.xhr.get(uri);
 }
 

@@ -1,22 +1,20 @@
 import React from 'react';
+import connectToStores from 'flummox/connect';
+
 import Table from 'react-bootstrap/lib/Table';
-import UserStore from '../stores/UserStore';
 import Spinner from 'react-spinkit';
 
-function getStateFromStores() {
-    return {
-        users: UserStore.getUsers(),
-        loading: UserStore.isLoading()
-    };
-}
-
-export default class Users extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = getStateFromStores();
+let comp = class Users extends React.Component {
+    componentWillReceiveProps(newProps) {
+        if(newProps.projectId && this.props.projectId !== newProps.projectId) {
+            setTimeout(() => {
+                this.props.flux.getActions('user').getUsers(newProps.projectId);
+            }, 100);
+        }
     }
+
     render() {
-        let rows = this.state.users.map((row) => {
+        let rows = this.props.users.map((row) => {
             return (
                 <tr>
                     <td>{row.firstName} {row.lastName}</td>
@@ -24,7 +22,7 @@ export default class Users extends React.Component {
                 </tr>
             );
         });
-        if (this.state.loading) {
+        if (this.props.loading === true) {
             return <Spinner spinnerName='three-bounce'/>;
         } else {
             return (
@@ -42,5 +40,16 @@ export default class Users extends React.Component {
             );
         }
     }
-}
+};
 
+comp = connectToStores(comp, {
+    login: store => ({
+        projectId: store.getProjectId()
+    }),
+    user: store => ({
+        users: store.getUsers(),
+        loading: store.isLoading()
+    })
+});
+
+export default comp;
