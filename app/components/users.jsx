@@ -1,15 +1,14 @@
 import React from 'react';
 import connectToStores from 'flummox/connect';
+import bootstrappedComponent from './bootstrappedComponent';
 
 import Table from 'react-bootstrap/lib/Table';
 import Spinner from 'react-spinkit';
 
-let comp = class Users extends React.Component {
+class Users extends React.Component {
     componentWillReceiveProps(newProps) {
         if(newProps.projectId && this.props.projectId !== newProps.projectId) {
-            setTimeout(() => {
-                this.props.flux.getActions('user').getUsers(newProps.projectId);
-            }, 100);
+            this.props.flux.getActions('user').getUsers(newProps.projectId);
         }
     }
 
@@ -40,16 +39,11 @@ let comp = class Users extends React.Component {
             );
         }
     }
-};
+}
 
-comp = connectToStores(comp, {
-    login: store => ({
-        projectId: store.getProjectId()
-    }),
+export default connectToStores(bootstrappedComponent(Users), {
     user: store => ({
         users: store.getUsers(),
         loading: store.isLoading()
     })
 });
-
-export default comp;

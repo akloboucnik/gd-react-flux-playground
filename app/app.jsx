@@ -17,12 +17,7 @@ import { PayloadSources, ActionTypes } from './constants/AppConstants';
 import { AppFlux } from './appFlux';
 import FluxComponent from 'flummox/component';
 
-// TODO add proper login
-const {USER, PASS} = require('../.credentials');
 const flux = new AppFlux();
-const loginActions = flux.getActions('login');
-loginActions.login(USER, PASS);
-
 let {DefaultRoute, Link, Route, RouteHandler} = Router;
 
 let App = React.createClass({
